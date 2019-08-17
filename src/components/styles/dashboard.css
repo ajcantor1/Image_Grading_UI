@@ -1,0 +1,180 @@
+html, body {
+  width: 100%;  
+  min-height: 100vh;
+}
+
+
+
+  
+#dashboard-container {
+
+  height: 100%;
+  display: inline-block;
+  position: relative;
+  width: 100%;
+}
+
+#project-nav-container {
+ 
+
+  min-height: 100vh;
+  position: relative;
+  background: linear-gradient(to right, rgba(0, 0, 0, 1.0), 
+  rgba(0, 0, 0, 0.9)) !important;
+  min-height: 100vh;
+  height: 100vh;
+  display: inline-block;
+  max-width: 15%;
+  min-width: 200px;
+  border-radius: 0px;
+}
+
+#project-management {
+  vertical-align: top;
+
+  position: absolute;
+  background: linear-gradient(to bottom, rgba(0, 0, 1, 0.95), 
+  rgba(0, 0, 1, 0.8)) !important;
+  top: 0px;
+  left: 200px;
+  height: 100%;
+  width: 85%;
+  display: inline-block;
+}
+
+
+
+.nav-content {
+
+  width: 100%;
+  align-content: stretch;
+  min-height: 100%;
+}
+
+.relative-avi-wrapper {
+  
+  width: 100%;
+  min-height: 25%;
+  border-radius: 50%;
+}
+
+.relative-nav-wrapper {
+
+  position: absolute;
+  top: 160px;
+  height: 100%;
+  overflow: hidden;
+  min-width: 200px;
+}
+
+.avatar {
+  
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  left: 50px;
+  top: 40px;
+  align-content: center;    
+  border-radius: 50%;
+}
+
+.avi-border {
+
+  position: absolute;
+  width: 120px;
+  height: 120px;   
+  left: 40px;
+  top: 30px;
+  border-radius: 50% !important;
+
+  background: #360033;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #0b8793, #360033);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #0b8793, #360033) !important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */animation: border-spin infinite 10s linear;
+}.initial {
+  font-size: 50px;
+  height: 50px;
+  color: white;
+  font-family: 'Helvetica';
+}
+
+.name {
+
+  position: relative;
+  font-size: 18px;
+  color: white;
+
+}@keyframes border-spin {
+
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+#new-project{
+
+  text-align: center;
+  position: relative;
+  font-size: 16px;
+  height: 32px;
+  color: skyblue;
+  font-weight: bold;
+  width: 100%;
+  margin: 5% auto;
+  max-width: 200px;
+  border: none;
+  background: linear-gradient(to bottom, rgb(0, 15, 82), rgba(9, 4, 37, 0.9)) !important;
+}
+
+
+.not::before {
+  color: red;
+  font-weight: bold;
+  display: inline-block; 
+  width: 15px;
+  margin-left: 2px;
+  font-size: 20px;
+  content: "\2022";
+}
+
+
+.selected::before {
+  color: green;
+  font-weight: bold;
+  display: inline-block; 
+  width: 15px;
+  margin-left: 2px;
+  font-size: 20px;
+  content: "\2022";
+}
+
+ul li{
+
+  margin-left: 40px;
+  position: relative; 
+  font-size: 16px;
+  height: 28px;
+  width: 90%;
+  max-width: 160px;
+  color: white;
+  list-style: none;
+}
+
+
+#new-project:hover {
+
+  background: linear-gradient(to bottom, rgb(13, 34, 128), rgba(9, 4, 37, 0.9)) !important;
+}
+
+#new-project:active {
+
+  background: linear-gradient(to bottom,rgba(9, 4, 37, 0.9), rgb(13, 34, 128)) !important;
+}
+
+#plus-symbol {
+
+  color: rgb(34, 146, 62);
+  font-weight: 900;
+  font-size: 24px;
+}
+
+
+

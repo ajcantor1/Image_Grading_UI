@@ -1,0 +1,35 @@
+html,body{
+    width: 100%;
+    height: 100%;
+    }
+
+#login-form {
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    border-radius: 5px;
+    border: 2px solid rgb(135, 154, 170);
+    display: block;
+    position: relative;
+    min-width: 250px;
+    min-height: 200px;
+   
+}
+
+.login-label {
+
+    margin-left: 5%;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    display: block;
+    font-size: 12px;
+}
+
+.login-text-box {
+    display: block;
+    width: 80%;
+    margin-top: 8%;
+    margin-bottom: 8%;
+    margin-left: auto;
+    margin-right: auto;
+}
