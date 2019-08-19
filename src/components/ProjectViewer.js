@@ -5,21 +5,17 @@ import Divider from  '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import DragAndDrop from "./DragAndDrop";
-
+import ImageViewer from "./ImageViewer";
 
 export default class ProjectViewer extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { 
-            images: [],
-            selectedImage: null
-        };
+        this.imageViewer = React.createRef();
 
-        this.refreshImages = this.refreshImages.bind(this);
         this.uploadImage = this.uploadImage.bind(this);
     }
-S
+
     uploadImage(file_name, encoding) {
 
         axios.post("http://localhost:3001/images/upload", { 
@@ -38,35 +34,17 @@ S
     
             console.log("Image failed to upload", error);
                 
-        });                
-    }
-
-
-    
-
-    refreshImages() {
-        axios.post("http://localhost:3001/images/list", {
-            project: {
-                project_id: this.props.project_id
-            }
-        }, {withCredentials: true})
-            .then(response => {
-
-                if (response.data.images_available) {
-                    this.setState({
-                        images: response.data.images
-                    });   
-                }
-         
-            })
-            .catch(error => {
-                console.log("error", response)
-            }) 
+        }); 
+        
      
     }
+
     render() {
         return (
-            <div id="project-management"><DragAndDrop uploadImage={this.uploadImage}/></div>
+            <div>
+                <DragAndDrop uploadImage={this.uploadImage}/>
+                <ImageViewer ref={this.imageViewer} project_id={this.props.project_id}/>
+            </div>
         );
     }   
 }

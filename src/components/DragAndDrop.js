@@ -73,10 +73,9 @@ export default class DragAndDrop extends Component {
                 let reader = new FileReader();
                 
                 reader.onloadend = () => {
-                    let file_base64 = reader.result;
-                    let stripped = file_base64.split('base64,')[1]
                     
-                    this.props.uploadImage(files[i].name,stripped);
+                    let file_base64 = reader.result;                   
+                    this.props.uploadImage(files[i].name,file_base64);
                 };
                 reader.onerror = function (error) {
                 
@@ -113,19 +112,14 @@ export default class DragAndDrop extends Component {
                 height: '100%'
             }}
             ref={this.dropRef}
-          >
-          
-              
+          >              
                 <section className="lower-opacity" id="image-upload-section">
                     <div className="lower-opacity" id="image-upload-section-inner">
                         <img  src={require("./images/photos.png")}/>
                     </div>
                 </section>
-         
-          
-
           </div>
-        )
-      }
-
+        );
+    }
+    
 }

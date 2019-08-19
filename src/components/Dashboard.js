@@ -98,6 +98,11 @@ export default class Dashboard extends Component {
     }
 
     render(){
+        let showProjectViewer = <div/>
+
+        if (this.state.selectedProject != -1) {
+            showProjectViewer = <ProjectViewer project_id={this.state.selectedProject}/>
+        }
 
         return (
             <div id="dashboard-container">
@@ -149,9 +154,9 @@ export default class Dashboard extends Component {
                         </div>
                     }
                 />  
-               
-                    <ProjectViewer project_id={this.state.selectedProject}/>
-              
+                     <div id="project-management">
+                        {showProjectViewer}
+                    </div>
             </div>
         );
     }
