@@ -75,7 +75,7 @@ export default class App extends Component {
             )}
             />
             <Route 
-            exact path={"/Dashboard"} 
+            path={"/Dashboard"} 
             render={props => (
               <Dashboard {...props} params={this.state}/>
             )}
