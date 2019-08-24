@@ -5,7 +5,8 @@ import Paper from '@material-ui/core/Paper';
 import './styles/dashboard.css';
 import './styles/modal.css';
 import CreateProjectModal from "./CreateProjectModal";
-import DragAndDrop from "./DragAndDrop";
+import ProjectViewer from './ProjectViewer';
+
 
 export default class Dashboard extends Component {
     constructor(props) {
@@ -14,68 +15,44 @@ export default class Dashboard extends Component {
         this.state = { 
             show_create_project: false,
             projects: [],
-            selectedProject: -1,
-            images: [],
+            selectedProject: null
         };
 
-        this.uploadImage = this.uploadImage.bind(this);
+        this.ProjectViewerRef = React.createRef();
 
         this.showCreateProjectModal = this.showCreateProjectModal.bind(this);
         this.hideCreateProjectModal = this.hideCreateProjectModal.bind(this);
-        this.refreshProjectList = this.refreshProjectList.bind(this);
+
         this.selectProject = this.selectProject.bind(this);
-        this.isProjectSelected = this.isProjectSelected.bind(this);
-        this.refreshImages = this.refreshImages.bind(this);
-
+        this.refreshProjectList = this.refreshProjectList.bind(this);
         this.refreshProjectList();
-
     }
 
+    componentDidMount(){
+        
+        try {
+            
+            let project_id = parseInt(sessionStorage.getItem('project'),10);
+            this.setState({
+                selectedProject: project_id
+            });
+            this.ProjectViewerRef.refreshImages(project_id);
+
+        }catch(error) {
+
+            this.setState({selectedProject: null}); 
+        }
+        
+    }
 
     selectProject(id){
 
         this.setState({
-            selectedProject: id
+            selectedProject: id,
         });
-        this.refreshImages(id);
-        sessionStorage.setItem('project', id);
+        
+        sessionStorage.setItem('project', id); 
       
-    }
-
-    componentWillUnmount() {
-        this.setState({
-            selectedProject: -1
-        });
-    }
-
-    componentDidMount() {
-
-        try {
-            let id = parseInt(sessionStorage.getItem('project'),10);
-            this.setState({
-                selectedProject: id
-            });
-            this.refreshImages();
-        
-        }catch(error) {
-
-            this.setState({
-                selectedProject: -1
-            });            
-        }
-
-    }
-    
-    isProjectSelected(value) {
-        
-        if(this.state.selectedProject === value.name)
-        {
-            return 1;
-        }
-        else
-        {
-            return -1;
-        }
     }
 
     refreshProjectList() {
@@ -84,18 +61,18 @@ export default class Dashboard extends Component {
                 user_id: this.props.params.user.id
             }
         }, {withCredentials: true})
-            .then(response => {
+        .then(response => {
 
-                if (response.data.projects_available) {
-                    this.setState({
-                        projects: response.data.projects
-                    });   
-                }
-         
-            })
-            .catch(error => {
-                console.log("error", response)
-            }) 
+            
+            this.setState({
+                projects: response.data.projects
+            });   
+           
+        
+        })
+        .catch(error => {
+            console.log("error", response)
+        }) 
      
     }
 
@@ -130,70 +107,8 @@ export default class Dashboard extends Component {
         this.setState({ show_create_project: false })
     }
 
-    uploadImage(file_name, encoding) {
-
-        axios.post("http://localhost:3001/images/upload", { 
-            data: {
-                encoded_image: encoding,
-                file_name: file_name,
-                project_id: this.props.project_id
-            }
-        }, {withCredentials: true})
-        .then(res => { 
-            
-            // then print response status
-            //this.imageViewer.refreshImages();
-            console.log("Image Sucessfully uploaded",res.statusText)
-        })
-        .catch(error => {
-    
-            console.log("Image failed to upload", error);
-                
-        }); 
-    }
-    refreshImages(id) {
-        axios.post("http://localhost:3001/images/list", {
-            data: {
-                project_id: id
-            }
-        }, {withCredentials: true})
-        .then(response => {
-           
-            if (response.data.images.length > 0) {
-                this.setState({
-                    images: response.data.images
-                }); 
-
-            }
-            else {
-                this.setState({
-                    images: []
-                });                  
-            }
-          
-        })
-        .catch(error => {
-            console.log("error", error)
-        });    
-    }
     render(){
-        let showProjectViewer = <div/>
-
-        if (this.state.selectedProject != -1) {
-            let imgs = [];
-            for (var i = 0; i < this.state.images.length; i++) {
-           
-                imgs.push(<img key={i} src={this.state.images[i].encoded_image} />);
-            }
-            showProjectViewer = 
-                <div>
-                    <DragAndDrop uploadImage={this.uploadImage}/>
-                    <div id="grid">
-                        {imgs}
-                    </div>
-                </div>
-        }
-
+      
         return (
             <div id="dashboard-container">
                 <CreateProjectModal show={this.state.show_create_project} handleClose={this.hideCreateProjectModal}>
@@ -243,10 +158,15 @@ export default class Dashboard extends Component {
                             </div>
                         </div>
                     }
-                />  
-                     <div id="project-management">
-                        {showProjectViewer}
-                    </div>
+                />
+                <div id="project-management">
+                    {this.state.selectedProject &&
+                        <ProjectViewer 
+                         ref={this.ProjectViewerRef}
+                         project_id={this.state.selectedProject}
+                        />
+                    }
+                </div>
             </div>
         );
     }

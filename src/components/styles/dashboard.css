@@ -200,9 +200,25 @@ ul li{
   height: 400px;
   scrollbar-color: rgba(7, 27, 209, 0.5) rgba(11, 19, 44, 0.8) 
 }
+
 #grid img {
   border: 1px solid #ccc;
   box-shadow: 2px 2px 6px 0px  rgba(0,0,0,0.3);
   width: 150px;
   height: 150px;
 }
+
+#image-tools-section {
+  display: block;
+  position: relative;
+  height: 30%;
+  min-width: 100%;  
+}
+
+#image-canvas-section {
+  position: relative;
+  height: 70%;
+  min-width: 100%;
+  display: block;
+}
+

@@ -7,7 +7,6 @@ export default class DragAndDrop extends Component {
     constructor(props) {
         super(props);
         this.dropRef = React.createRef();
-        this.uploadImage = this.props.uploadImage.bind(this);
         this.state = {
      
             dragging : false,
@@ -108,9 +107,7 @@ export default class DragAndDrop extends Component {
     render() {
         return (
           <div
-            style={{
-                height: '100%'
-            }}
+  
             ref={this.dropRef}
           >              
                 <section className="lower-opacity" id="image-upload-section">
