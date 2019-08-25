@@ -154,7 +154,7 @@ export default class Dashboard extends Component {
                                     })}
                                 </ul>
                                 <br/>
-                                <Divider/>
+                            
                             </div>
                         </div>
                     }
