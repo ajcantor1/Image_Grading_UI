@@ -58,8 +58,6 @@ export default class ProjectViewer extends Component {
         this.setState({selectedImage:image});
     }
 
- 
-
     refreshImages() {
       
         axios.post("http://localhost:3001/images/list", {

@@ -205,6 +205,7 @@ ul li{
 }
 
 #grid img {
+  
   border: 1px solid #ccc;
   box-shadow: 2px 2px 6px 0px  rgba(0,0,0,0.3);
   width: 150px;
@@ -212,52 +213,55 @@ ul li{
 }
 
 #image-tools-section {
+  
+  color: white;
   position: relative;
   height: 100vh;
-  width: 100px;  
+  width: 140px;  
+  font-size: 12px;
+  font-weight: 700;
   align-content: center;
   display: flex;
+  text-align: center;
   flex-direction: column;
 }
 
 #image-canvas-section {
+  
   position: relative;
-  min-width: calc(100%-100px);
+  width: calc(100%-140px);
+  flex-grow: 1;
   height: 100vh;
- 
+}
+
+.inner-icon {
+    
+    margin-top: 5px !important;
+    margin-left: 2px;
+    
 }
 
 .circle-button {
-
+  margin-bottom: 12px;
   border-radius: 50%;
-  height: 70px;
-  width: 70px;
-  margin-top: 35px;
-  margin-left: 30px;
+  height: 64px;
+  width: 65px;
+  margin-top: 30px;
+  margin-left: 36px;
+  margin-bottom: 10px;
   background-color: #1564B2;
   box-shadow: 1px 3px 4px 1px  rgba(26, 32, 37, 0.5);
-
-
 }
 
-.wand-icon {
-    
+ 
 
-    margin-top: 5px !important;
-    margin-left: 2px;
+.tool-selected ,.undo-btn:active {
 
-
-}
-
-
-.circle-button:active {
-
-  
   border-radius: 50%;
-  height: 73px;
-  width: 76px;
-  margin-top: 35px;
-  margin-bottom: -3px;
+  height: 68px;
+  width: 69px;
+  margin-top: 30px;
+  margin-bottom: 6px;
   background-color: rgb(8, 30, 51);
   box-shadow: 0px 0px;
 	-moz-box-shadow: 0px 0px;
@@ -269,8 +273,52 @@ ul li{
 
   color: white;
   font-size: 42px;
-  margin: 20% 20%;
+  margin: 8% 28%;
+}
+
+.numeric-box-container {
+  display: flex;
+  flex-direction: row;
+  height: 32px;
+  margin-left: 12px;
+}
+
+.numeric-box-container button{
+  border: none;
+  box-shadow: 0px;
+  width: 32px;
+  height: 31px;
+  font-size: 24px;
+  background-color: white;
+  color: #1564B2;
+  font-weight: bold;
+  box-shadow: -1px -1px 3px black inset;
+  
+
+}
+
+.numeric-text-box {
+  border: none;
+  font-family: "Arial Black", Gadget, sans-serif;
+  text-align: center;
+  font-size: 14px;
+  height: 30px;
+  background-color: white;
+  width: 50px;
 }
 
 
 
+
+
+#image-canvas {
+  width: 560px;
+  height: 560px;
+  margin-left: 18%;
+  margin-top: 3%;
+}
+
+#image-canvas img {
+  height: 100%;
+  width: 100%;
+}
