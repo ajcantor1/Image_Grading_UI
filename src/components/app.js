@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import Home from './Home';
 import Dashboard from './Dashboard'
-import axios from 'axios';
+import { connect } from 'react-redux';
+import * as actions from '../store/actions/auth'
 
-export default class App extends Component {
+class App extends Component {
+
   constructor(){
     super();
 
@@ -18,6 +20,10 @@ export default class App extends Component {
  
   }
 
+  componentDidMount() {
+    this.props.onTryAutoSignUp();
+  }
+  /*
   checkedLoginStatus() {
     axios.get("http://localhost:3001/logged_in", {withCredentials: true})
     .then(response => {
@@ -40,11 +46,8 @@ export default class App extends Component {
       console.log("check login error", error)
     });
   }
+  */
 
-  componentDidMount() {
-  
-    this.checkedLoginStatus();
-  }
 
   handleLogout(){
     this.setState({
@@ -86,3 +89,17 @@ export default class App extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+	return {
+		isAuthenticated: state.token !== null
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		onTryAutoSignUp: () => dispatch(actions.authCheckState())
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

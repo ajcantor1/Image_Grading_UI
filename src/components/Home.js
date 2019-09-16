@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import Login from "./auth/Login";
+import { connect } from 'react-redux';
 
-export default class Home extends Component {
+class Home extends Component {
     constructor(props) {
         super(props);
-
-        this.handleSuccessfulAuth = this.handleSuccessfulAuth.bind(this);
-
     }
     
-    handleSuccessfulAuth(data){
-        this.props.handleLogin(data);
-        this.props.history.push("/dashboard");
+    componentDidUpdate(prevProps) {
+        if (this.props.isAuthenticated) {
+            this.props.history.push('/dashboard');
+        }
     }
 
     handleLogoutClick(){
@@ -21,10 +20,22 @@ export default class Home extends Component {
     render(){
         return (
             <div>
-         
-         
-                <Login handleSuccessfulAuth={this.handleSuccessfulAuth}/>
+                <Login/>
             </div>
         );
     }
 }
+
+const mapStateToProps = state => {
+	return {
+		isAuthenticated: state.token !== null
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		onTryAutoSignUp: () => dispatch(actions.authCheckState())
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

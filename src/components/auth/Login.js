@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import '../styles/login.css';
+import {connect} from 'react-redux';
+import * as actions from '../../store/actions/auth';
+import { withRouter } from 'react-router-dom';
+import * as actionTypes from '../../store/actions/actionTypes';
 
-export default class Login extends Component {
+class Login extends Component {
     constructor(props) {
         super(props);
 
@@ -30,11 +34,19 @@ export default class Login extends Component {
         console.log("handle change", event);
     }
 
+
     onLogin(event){
         
      
-
         const {email, password} = this.state;
+        this.props.onAuth(email, password);
+        console.log(this.props);
+        
+    
+      
+        
+    
+        /*
         axios.post("http://localhost:3001/sessions", {
             user: {
                 email: email,
@@ -53,13 +65,15 @@ export default class Login extends Component {
         .catch(error => {
             console.log("registration error", error)
         });
-        
+        */
         event.preventDefault();
 
     }
 
     onRegister(event){
         const {email, first_name, last_name, password, password_confirmation} = this.state;
+        this.props.onRegister(email, password, password_confirmation, first_name, last_name)
+        /*
         axios.post("http://localhost:3001/registrations", {
             user: {
                 email: email,
@@ -82,13 +96,13 @@ export default class Login extends Component {
         .catch(error => {
             console.log("registration error", error)
         });
-
+        */
         event.preventDefault();
     }
 
     createAccountClick(event){
 
-        console.log("hell");
+  
         event.preventDefault();
         this.setState({
             createAccount: true,
@@ -169,3 +183,18 @@ export default class Login extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        token: state.token,
+        loading: state.loading
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onAuth: (email, password) => dispatch(actions.authLogin(email, password)),
+        onRegister: (email, password, password_confirmation, first_name, last_name) => dispatch(actions.authSignup(email, first_name, last_name, password, password_confirmation)) 
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));

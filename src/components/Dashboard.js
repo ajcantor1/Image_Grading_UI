@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Divider from  '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import './styles/dashboard.css';
 import './styles/modal.css';
 import CreateProjectModal from "./CreateProjectModal";
 import ProjectViewer from './ProjectViewer';
+import { connect } from "react-redux";
+import { throws } from 'assert';
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
+            
     constructor(props) {
         super(props);
 
         this.state = { 
             show_create_project: false,
             projects: [],
-            selectedProject: null
+            selectedProject: null,
+            first_name: '',
+            last_name: ''
         };
 
         this.ProjectViewerRef = React.createRef();
@@ -27,8 +31,17 @@ export default class Dashboard extends Component {
         this.refreshProjectList();
     }
 
-    componentDidMount(){
-        
+    componentDidMount() {
+        this.setState({
+            first_name: localStorage.getItem('first_name'),
+            last_name: localStorage.getItem('last_name')
+        })
+    }
+
+
+    componentDidUpdate(prevProps) {
+
+        /*
         try {
             
             let project_id = parseInt(sessionStorage.getItem('project'),10);
@@ -41,8 +54,10 @@ export default class Dashboard extends Component {
 
             this.setState({selectedProject: null}); 
         }
-        
+        */
     }
+
+
 
     selectProject(id){
 
@@ -55,14 +70,14 @@ export default class Dashboard extends Component {
     }
 
     refreshProjectList() {
-        axios.post("http://localhost:3001/projects/list", {
-            user: {
-                user_id: this.props.params.user.id
-            }
+
+        /*
+        axios.post("http://localhost:3001/projects/", {
+
         }, {withCredentials: true})
         .then(response => {
-
-            
+            console.log(response);
+            /*
             this.setState({
                 projects: response.data.projects
             });   
@@ -71,8 +86,8 @@ export default class Dashboard extends Component {
         })
         .catch(error => {
             console.log("error", response)
-        }) 
-     
+        });
+         */
     }
 
     showCreateProjectModal() {
@@ -129,10 +144,10 @@ export default class Dashboard extends Component {
                 
                                 <center>
                                 <div>
-                                    <p><span className="name">{this.props.params.user.first_name}</span></p>
+                                    <p><span className="name">{this.state.first_name}</span></p>
                                 </div>
                                 <div>
-                                    <p><span className="name">{this.props.params.user.last_name}</span></p>
+                                    <p><span className="name">{this.state.last_name}</span></p>
                                 </div>
                                 </center>
                             
@@ -170,3 +185,12 @@ export default class Dashboard extends Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+      token: state.token
+    };
+};
+
+
+export default connect(mapStateToProps)(Dashboard);
