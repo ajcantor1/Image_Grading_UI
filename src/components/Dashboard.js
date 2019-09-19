@@ -6,7 +6,7 @@ import './styles/modal.css';
 import CreateProjectModal from "./CreateProjectModal";
 import ProjectViewer from './ProjectViewer';
 import { connect } from "react-redux";
-import { throws } from 'assert';
+import Authorization from "./auth/Authorization";
 
 class Dashboard extends Component {
             
@@ -31,32 +31,7 @@ class Dashboard extends Component {
         this.refreshProjectList();
     }
 
-    componentDidMount() {
-        this.setState({
-            first_name: localStorage.getItem('first_name'),
-            last_name: localStorage.getItem('last_name')
-        })
-    }
-
-
-    componentDidUpdate(prevProps) {
-
-        /*
-        try {
-            
-            let project_id = parseInt(sessionStorage.getItem('project'),10);
-            this.setState({
-                selectedProject: project_id
-            });
-            this.ProjectViewerRef.refreshImages(project_id);
-
-        }catch(error) {
-
-            this.setState({selectedProject: null}); 
-        }
-        */
-    }
-
+ 
 
 
     selectProject(id){
@@ -71,23 +46,25 @@ class Dashboard extends Component {
 
     refreshProjectList() {
 
-        /*
-        axios.post("http://localhost:3001/projects/", {
+        axios.post("http://localhost:8000/project/list", {
 
         }, {withCredentials: true})
         .then(response => {
             console.log(response);
-            /*
-            this.setState({
-                projects: response.data.projects
-            });   
+            
+            if(response.data.length > 0) {
+                console.log(response.data);
+                this.setState({
+                    projects: response.data
+                });   
+            }
            
         
         })
         .catch(error => {
-            console.log("error", response)
+            console.log("error", error)
         });
-         */
+       
     }
 
     showCreateProjectModal() {
@@ -98,11 +75,10 @@ class Dashboard extends Component {
         
         if(save) {
             const new_project_name = project_name;
-            axios.post("http://localhost:3001/projects/create", {
-                project: {
-                    name: new_project_name,
-                    user_id: this.props.params.user.id
-                }
+            axios.post("http://localhost:8000/project/create", {
+           
+                    name: new_project_name
+            
             }, {withCredentials: true})
             .then(response => {
                 console.log("res: ", response);
@@ -144,10 +120,10 @@ class Dashboard extends Component {
                 
                                 <center>
                                 <div>
-                                    <p><span className="name">{this.state.first_name}</span></p>
+                                    <p><span className="name">{localStorage.getItem('first_name')}</span></p>
                                 </div>
                                 <div>
-                                    <p><span className="name">{this.state.last_name}</span></p>
+                                    <p><span className="name">{localStorage.getItem('last_name')}</span></p>
                                 </div>
                                 </center>
                             
@@ -193,4 +169,4 @@ const mapStateToProps = state => {
 };
 
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps)(Authorization(Dashboard));

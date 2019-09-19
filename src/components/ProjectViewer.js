@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import DragAndDrop from "./DragAndDrop";
 import ImageEditor from "./ImageEditor";
-export default class ProjectViewer extends Component {
+import { connect } from "react-redux";
+import Authorization from "./auth/Authorization";
+class ProjectViewer extends Component {
     constructor(props) {
         super(props);
 
@@ -12,7 +14,6 @@ export default class ProjectViewer extends Component {
         }
 
         this.selectImage = this.selectImage.bind(this);
-        this.uploadImage = this.uploadImage.bind(this);
         this.refreshImages = this.refreshImages.bind(this);
         this.refreshImages();
         
@@ -30,14 +31,17 @@ export default class ProjectViewer extends Component {
     }
       
     
-    uploadImage(file_name, encoding) {
+    uploadImage(file_name, encoded_image) {
 
-        axios.post("http://localhost:3001/images/upload", { 
-            data: {
-                encoded_image: encoding,
-                file_name: file_name,
+   
+        console.log("hello: "+this.props.project_id);
+        
+        axios.post("http://localhost:8000/images/create", { 
+         
+                image_data: encoded_image,
+                name: file_name,
                 project_id: this.props.project_id
-            }
+      
         }, {withCredentials: true})
         .then(res => { 
             
@@ -60,16 +64,16 @@ export default class ProjectViewer extends Component {
 
     refreshImages() {
       
-        axios.post("http://localhost:3001/images/list", {
-            data: {
+        axios.post("http://localhost:8000/images/list", {
+          
                 project_id: this.props.project_id
-            }
+          
         }, {withCredentials: true})
         .then(response => {
-          
-            if (response.data.images.length > 0) {
+            console.log(response.data)
+            if (response.data.length > 0) {
                 this.setState({
-                    images: response.data.images
+                    images: response.data
                 }); 
                 
             }
@@ -101,7 +105,7 @@ export default class ProjectViewer extends Component {
             return(
                 <div>
                 
-                    <DragAndDrop uploadImage={this.state.uploadImage}/>
+                    <DragAndDrop uploadImage={this.uploadImage.bind(this)}/>
                     <div id="grid">
                         {imgs}
                     </div>
@@ -114,3 +118,7 @@ export default class ProjectViewer extends Component {
         }
     }
 }
+
+
+
+export default Authorization(ProjectViewer);
