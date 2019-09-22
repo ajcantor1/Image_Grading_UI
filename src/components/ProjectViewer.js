@@ -26,7 +26,6 @@ class ProjectViewer extends Component {
      
         if (prevProps && prevProps.project_id !== current_project) {
             this.refreshImages();
-    
         }
     }
       
@@ -59,6 +58,7 @@ class ProjectViewer extends Component {
     selectImage(index) {
     
         let image = this.state.images[index];
+        console.log(image)
         this.setState({selectedImage:image});
     }
 

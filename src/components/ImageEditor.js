@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
+import ImageCanvas from './ImageCanvas';
 
 import { Icon } from 'react-icons-kit';
 import { magicWand } from 'react-icons-kit/icomoon/magicWand';
@@ -19,7 +19,7 @@ export default class ImageEditor extends Component {
             brushSize: 5,
             tolerance: 30,
         }
-
+        
         this.toolClicked = this.toolClicked.bind(this);
         this.numericValueUpdate = this.numericValueUpdate.bind(this);
      
@@ -142,17 +142,18 @@ export default class ImageEditor extends Component {
                         </div>
                     </a>
 
+                    <div style={{marginTop: '14px', height: '24px'}}>
                     {(this.state.toolSelected=='brush' || this.state.toolSelected=='eraser') &&
-                        <div style={{marginTop: '24px'}}>
-                            Brush Size:
-                        </div>
+                        
+                        "Brush Size:"
+                        
                     }
                     {(this.state.toolSelected =='bucket' || this.state.toolSelected=='magicWand') &&
-                        <div style={{marginTop: '24px'}}>
-                            Tolerance:
-                        </div>
+                       
+                            "Tolerance:"
+                        
                     }
-         
+                    </div>
                    
                     <div class='numeric-box-container'>
                         <button onClick={() => this.numericValueUpdate(-1)} disabled={!numericBoxEnabled} class='numeric-box-button'>-</button>
@@ -169,11 +170,11 @@ export default class ImageEditor extends Component {
                     </div>
                 </div>
                
-                <div id="image-canvas-section">
-                    <div id="image-canvas">
-                        <img src={this.props.image.encoded_image}/>
-                    </div>
+               
+                <div>
+                <ImageCanvas image={this.props.image}/>
                 </div>
+                
             </div>
         );
     }
